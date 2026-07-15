@@ -5,8 +5,8 @@ on:
     branches:
       - main
       - master
-      - "*" # هذا السطر يضمن تشغيل البناء على أي فرع تقوم بالرفع عليه
-  workflow_dispatch: # لتشغيل الزر يدوياً
+      - "*"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,7 +21,10 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-          cache: 'gradle'
+
+      # هذه الخطوة ستقوم بإنشاء ملف gradle-wrapper.jar المفقود تلقائياً
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Grant Execute Permission for Gradlew
         run: chmod +x gradlew
